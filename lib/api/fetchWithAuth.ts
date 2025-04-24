@@ -1,6 +1,5 @@
 import { StatusCodes } from "http-status-codes";
 import { refreshToken } from "./user";
-import { cookies } from "next/headers";
 
 export const fetchWithAuth = async (input: RequestInfo, init: RequestInit = {}, retry = true): Promise<Response> => {
     const res = await fetch(input, {
@@ -9,7 +8,6 @@ export const fetchWithAuth = async (input: RequestInfo, init: RequestInit = {}, 
         headers: {
             "Content-Type": "application/json",
             ...(init.headers || {}),
-             Cookie: cookies().toString(),
         },
     });
 
