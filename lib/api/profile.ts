@@ -32,7 +32,7 @@ export async function getUserPosts(userId: string): Promise<Post[]> {
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URI!}/posts/user/${userId}`, defaultOptions)
         const body = await response.json()
         return (body.posts as Post[]) ?? []
-    } catch (_) {
+    } catch {
         return []
     }
 }
