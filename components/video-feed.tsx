@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react"
 import { VideoCard } from "@/components/video-card"
 import { VideoControls } from "@/components/video-controls"
-import { mockVideos } from "@/lib/mock-data"
 import { ChevronUp, ChevronDown } from "lucide-react"
 import { useQuery } from "@tanstack/react-query"
 import { CommentSection } from "./comment-section"
@@ -129,7 +128,7 @@ export function VideoFeed() {
 
             <button
               onClick={handleNext}
-              disabled={currentIndex === mockVideos.length - 1}
+              disabled={currentIndex === posts.length - 1}
               className="bg-gray-800 rounded-full p-2 disabled:opacity-30"
             >
               <ChevronDown className="w-5 h-5" />
