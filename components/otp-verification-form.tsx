@@ -145,6 +145,7 @@ export function OtpVerificationForm() {
             if (!res.ok) {
                 setError("Invalid verification code. Please try again.")
             } else {
+                setIsVerified(true)
                 router.push("/profile-setup")
             }
         } catch (err) {

@@ -1,5 +1,5 @@
 import { ChangeEvent, MouseEvent, RefObject, TouchEvent, useEffect, useState } from "react"
-import { Volume2, Volume, Volume1, VolumeX,Play, Pause } from "lucide-react"
+import { Volume2, Volume, Volume1, VolumeX, Play, Pause } from "lucide-react"
 export default function VideoController({ videoRef }: { videoRef: RefObject<HTMLVideoElement | null> }) {
     const [isMuted, setIsMuted] = useState(false)
     const [volume, setVolume] = useState(40)
@@ -34,8 +34,12 @@ export default function VideoController({ videoRef }: { videoRef: RefObject<HTML
     }, [videoRef, duration]);
 
     const onClickHandler = () => {
-        if (videoRef) {
-            videoRef.current?.paused ? videoRef.current?.play() : videoRef.current?.pause()
+        if (videoRef && videoRef.current) {
+            if (videoRef.current.paused) {
+                videoRef.current.play()
+            } else {
+                videoRef.current.pause()
+            }
             setIsPaused((prev) => !prev)
         }
     }
