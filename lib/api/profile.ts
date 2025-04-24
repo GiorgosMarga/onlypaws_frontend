@@ -22,7 +22,7 @@ export async function getUserData(userId: string): Promise<UserInfo | ReqError> 
         }
         
         return body.userInfo as UserInfo
-    } catch (_) {
+    } catch {
         return { message: "Internal server error" }
     }
 }
