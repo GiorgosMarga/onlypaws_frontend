@@ -1,9 +1,8 @@
-import { ChangeEvent, MouseEvent, Ref, RefObject, TouchEvent, useEffect, useState } from "react"
-import { Volume2, Volume, Volume1, VolumeX, StopCircle, PauseCircle, Play, PlayCircle, Pause } from "lucide-react"
+import { ChangeEvent, MouseEvent, RefObject, TouchEvent, useEffect, useState } from "react"
+import { Volume2, Volume, Volume1, VolumeX,Play, Pause } from "lucide-react"
 export default function VideoController({ videoRef }: { videoRef: RefObject<HTMLVideoElement | null> }) {
     const [isMuted, setIsMuted] = useState(false)
     const [volume, setVolume] = useState(40)
-    const [isSpeeding, setIsSpeeding] = useState(false)
     const [progress, setProgress] = useState(0)
     const [duration, setDuration] = useState(0)
     const [isPaused, setIsPaused] = useState(false)
@@ -32,9 +31,9 @@ export default function VideoController({ videoRef }: { videoRef: RefObject<HTML
         return () => {
             videoElement?.removeEventListener("timeupdate", updateProgress);
         }
-    }, [videoRef]);
+    }, [videoRef, duration]);
 
-    const onClickHandler = (e: MouseEvent<HTMLDivElement> | MouseEvent<SVGSVGElement>) => {
+    const onClickHandler = () => {
         if (videoRef) {
             videoRef.current?.paused ? videoRef.current?.play() : videoRef.current?.pause()
             setIsPaused((prev) => !prev)
@@ -73,14 +72,12 @@ export default function VideoController({ videoRef }: { videoRef: RefObject<HTML
     const onMouseDownHandler = (e: MouseEvent<HTMLDivElement> | TouchEvent<HTMLDivElement>) => {
         e.stopPropagation()
         if (videoRef.current) {
-            setIsSpeeding(true);
             videoRef.current.playbackRate = 2.0;
         }
     }
     const onMouseUpHandler = (e: MouseEvent<HTMLDivElement> | TouchEvent<HTMLDivElement>) => {
         e.stopPropagation()
         if (videoRef.current) {
-            setIsSpeeding(false);
             videoRef.current.playbackRate = 1.0; // back to normal
         }
     }

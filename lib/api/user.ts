@@ -1,4 +1,3 @@
-import { StatusCodes } from "http-status-codes"
 import { fetchWithAuth } from "./fetchWithAuth"
 
 export const whoAmI = async () => {

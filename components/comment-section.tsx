@@ -3,7 +3,7 @@
 import type React from "react"
 import type { Comment } from "@/lib/types"
 import { useState, useRef, useEffect } from "react"
-import { X, Send, ChevronDown, ChevronUp } from "lucide-react"
+import { X, Send } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { useQuery } from "@tanstack/react-query"
@@ -13,69 +13,7 @@ import { getComments } from "@/lib/api/comments"
 import { Spinner } from "./ui/spinner"
 import { CommentSectionSkeleton } from "./comments-skeleton"
 
-// Mock comments data
-const mockComments = [
-    {
-        id: "comment1",
-        user: {
-            username: "dogmom42",
-            avatar: "/placeholder.svg?height=40&width=40",
-        },
-        text: "Your dog is so adorable! What breed is he?",
-        likes: 24,
-        timestamp: "2h ago",
-    },
-    {
-        id: "comment2",
-        user: {
-            username: "puppylover",
-            avatar: "/placeholder.svg?height=40&width=40",
-        },
-        text: "This made my day! 😍🐕",
-        likes: 18,
-        timestamp: "3h ago",
-    },
-    {
-        id: "comment3",
-        user: {
-            username: "barkbarkclub",
-            avatar: "/placeholder.svg?height=40&width=40",
-        },
-        text: "My dog does the exact same thing! They're so smart.",
-        likes: 12,
-        timestamp: "5h ago",
-    },
-    {
-        id: "comment4",
-        user: {
-            username: "pawsitive",
-            avatar: "/placeholder.svg?height=40&width=40",
-        },
-        text: "What kind of treats do you use for training? I need to try that with my pup!",
-        likes: 8,
-        timestamp: "6h ago",
-    },
-    {
-        id: "comment5",
-        user: {
-            username: "goodboy",
-            avatar: "/placeholder.svg?height=40&width=40",
-        },
-        text: "The way he looks at you 🥺 Pure love!",
-        likes: 32,
-        timestamp: "8h ago",
-    },
-    {
-        id: "comment6",
-        user: {
-            username: "fluffytails",
-            avatar: "/placeholder.svg?height=40&width=40",
-        },
-        text: "I've watched this like 10 times already. Can't get enough!",
-        likes: 15,
-        timestamp: "10h ago",
-    },
-]
+
 
 interface CommentSectionProps {
     videoId: string
@@ -85,10 +23,8 @@ interface CommentSectionProps {
 
 
 export function CommentSection({ videoId, onClose }: CommentSectionProps) {
-    // const [comments, setComments] = useState(mockComments)
-    const { userId } = useUserStore()
 
-    const { data: comments, error, isFetching, refetch } = useQuery<Comment[]>({
+    const { data: comments, isFetching, refetch } = useQuery<Comment[]>({
         queryKey: ["comments", videoId],
         queryFn: async () => await getComments(videoId),
         enabled: !!videoId,
@@ -96,8 +32,7 @@ export function CommentSection({ videoId, onClose }: CommentSectionProps) {
 
     const [newComment, setNewComment] = useState("")
     const [replyComment, setReplyComment] = useState<Comment | null>(null)
-    const [likedComments, setLikedComments] = useState<Record<string, boolean>>({})
-    const [isExpanded, setIsExpanded] = useState<boolean>(false)
+    // const [likedComments, setLikedComments] = useState<Record<string, boolean>>({})
     const [isUploadingComment, setIsUploadingComment] = useState<boolean>(false)
     const commentInputRef = useRef<HTMLInputElement>(null)
 
@@ -149,13 +84,6 @@ export function CommentSection({ videoId, onClose }: CommentSectionProps) {
             </div>
         )
     }
-    const handleLikeComment = (commentId: string) => {
-        setLikedComments((prev) => ({
-            ...prev,
-            [commentId]: !prev[commentId],
-        }))
-    }
-
     const onClickReplyHandler = (comment: Comment) => {
         setReplyComment(comment)
         if (commentInputRef.current) {

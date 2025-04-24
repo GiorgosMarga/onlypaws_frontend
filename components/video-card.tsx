@@ -1,11 +1,10 @@
 "use client"
 
-import Image from "next/image"
 import { Music } from "lucide-react"
 import { Video } from "@/lib/types"
 import ProfileAvatar from "./ui/profile-avatar"
 import VideoController from "./ui/video-controller"
-import { Ref, RefObject, useRef } from "react"
+import {  useRef } from "react"
 
 
 export function VideoCard({ video }: { video: Video }) {

@@ -1,11 +1,10 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Grid, Heart, Bookmark, MessageCircle, MoreHorizontal, Plus, FileVideoIcon, Video } from "lucide-react"
+import { Grid, Heart, Bookmark, MessageCircle, MoreHorizontal, Plus, FileVideoIcon } from "lucide-react"
 import { useQuery } from "@tanstack/react-query"
 import { useUserStore } from "@/store/user"
 import type { Post, ReqError, UserInfo } from "@/lib/types"
@@ -27,11 +26,6 @@ export function UserProfile({ id }: { id: string }) {
     })
     const [activeTab, setActiveTab] = useState("posts")
 
-    useEffect(() => {
-        if (userData) {
-            console.log(userData)
-        }
-    }, [userData, isFetchingUser])
     if (isFetchingUser || isFetchingPosts) {
         <div className="flex items-center justify-center h-screen">
             <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
@@ -107,7 +101,7 @@ export function UserProfile({ id }: { id: string }) {
                 </div>
 
                 {/* Content Tabs */}
-                <Tabs defaultValue="posts" className="w-full" onValueChange={setActiveTab}>
+                <Tabs defaultValue="posts" className="w-full" value={activeTab} onValueChange={setActiveTab}>
                     <TabsList className="grid grid-cols-3 mb-6 bg-gray-800">
                         <TabsTrigger value="posts" className="cursor-pointer data-[state=active]:bg-gray-700">
                             <Grid className="h-4 w-4 mr-2" />

@@ -22,7 +22,7 @@ export async function getUserData(userId: string): Promise<UserInfo | ReqError> 
         }
         
         return body.userInfo as UserInfo
-    } catch (err) {
+    } catch (_) {
         return { message: "Internal server error" }
     }
 }
@@ -32,7 +32,7 @@ export async function getUserPosts(userId: string): Promise<Post[]> {
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URI!}/posts/user/${userId}`, defaultOptions)
         const body = await response.json()
         return (body.posts as Post[]) ?? []
-    } catch (err) {
+    } catch (_) {
         return []
     }
 }

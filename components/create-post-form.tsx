@@ -127,6 +127,7 @@ export function CreatePostForm() {
             window.location.href = `/profile/${userId}`
         } catch (err) {
             setError("An error occurred. Please try again.")
+            console.error(err)
         } finally {
             setIsSubmitting(false)
         }

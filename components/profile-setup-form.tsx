@@ -2,8 +2,7 @@
 
 import type React from "react"
 
-import { useState, useRef } from "react"
-import Image from "next/image"
+import { useState } from "react"
 import {
     User,
     FileText,
@@ -11,8 +10,6 @@ import {
     Calendar,
     AlertCircle,
     CheckCircle,
-    Upload,
-    X,
     CalendarDays,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -193,6 +190,7 @@ export function ProfileSetupForm() {
             setErrors({
                 general: "An error occurred. Please try again.",
             })
+            console.error(error)
         } finally {
             setIsSubmitting(false)
         }
@@ -309,7 +307,7 @@ export function ProfileSetupForm() {
 
                     {/* Right Column - Dog Info */}
                     <div className="space-y-5">
-                        <h3 className="text-lg font-medium border-b border-gray-700 pb-2">Your Dog's Information</h3>
+                        <h3 className="text-lg font-medium border-b border-gray-700 pb-2">Your Dog&apos;s Information</h3>
 
                         <div className="space-y-2">
                             <Label htmlFor="dogName" className={errors.dogName ? "text-red-400" : ""}>

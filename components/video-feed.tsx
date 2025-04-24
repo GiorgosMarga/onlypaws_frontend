@@ -4,22 +4,20 @@ import { useEffect, useState } from "react"
 import { VideoCard } from "@/components/video-card"
 import { VideoControls } from "@/components/video-controls"
 import { mockVideos } from "@/lib/mock-data"
-import { ChevronUp, ChevronDown, Router } from "lucide-react"
+import { ChevronUp, ChevronDown } from "lucide-react"
 import { useQuery } from "@tanstack/react-query"
 import { CommentSection } from "./comment-section"
-import { type Video } from "@/lib/types"
 import { whoAmI } from "@/lib/api/user"
 import { useRouter } from "next/navigation"
 import { useUserStore } from "@/store/user"
 import { getVideos } from "@/lib/api/videos"
-import { Spinner } from "./ui/spinner"
 import { VideoFeedSkeleton } from "./video-feed-skeleton"
 
 export function VideoFeed() {
   const router = useRouter()
   const { setUser } = useUserStore()
   const [showComments, setShowComments] = useState(false)
-  const { data: posts, isFetching, error } = useQuery({
+  const { data: posts, isFetching } = useQuery({
     queryKey: ["videos"],
     queryFn: async () => await getVideos(),
     refetchOnMount: false,

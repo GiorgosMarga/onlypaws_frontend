@@ -90,6 +90,7 @@ export function LoginForm() {
       setErrors({
         general: "An error occurred. Please try again later.",
       })
+      console.error(error)
     } finally {
       setIsSubmitting(false)
     }

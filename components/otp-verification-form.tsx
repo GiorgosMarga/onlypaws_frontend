@@ -112,6 +112,7 @@ export function OtpVerificationForm() {
             console.log("OTP resent successfully")
         } catch (err) {
             setError("Failed to resend OTP. Please try again.")
+            console.error(err)
         } finally {
             setIsResending(false)
         }
@@ -148,6 +149,7 @@ export function OtpVerificationForm() {
             }
         } catch (err) {
             setError("Verification failed. Please try again.")
+            console.error(err)
         } finally {
             setIsVerifying(false)
         }
@@ -160,7 +162,7 @@ export function OtpVerificationForm() {
                     <Shield className="w-8 h-8 text-white" />
                 </div>
                 <h1 className="text-2xl font-bold">Verify Your Account</h1>
-                <p className="text-gray-400 mt-2 text-center">We've sent a verification code to your email</p>
+                <p className="text-gray-400 mt-2 text-center">{"We've sent a verification code to your email"}</p>
             </div>
 
             {error && (
@@ -211,7 +213,7 @@ export function OtpVerificationForm() {
 
                 <div className="text-center mt-4">
                     <p className="text-sm text-gray-400">
-                        Didn't receive the code?{" "}
+                        Didn&apos;t receive the code?{" "}
                         {resendCountdown > 0 ? (
                             <span className="text-gray-500">Resend in {resendCountdown}s</span>
                         ) : (
