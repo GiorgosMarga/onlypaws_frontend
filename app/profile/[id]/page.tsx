@@ -4,9 +4,8 @@ import { UserProfile } from "@/components/user-profile"
 import { getUserData, getUserPosts } from "@/lib/api/profile"
 import { dehydrate, HydrationBoundary, queryOptions } from "@tanstack/react-query"
 
-export default async function ProfilePage(props: Promise<{ params: { id: string } }>) {
-    const { params } = await props
-    const { id } = params
+export default async function ProfilePage({ params }: { params: Promise<{ id: string }>}) {
+    const { id } = await params
     const queryClient = getQueryClient()
     queryClient.prefetchQuery(queryOptions({
         queryKey: ["user"],
