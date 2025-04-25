@@ -59,6 +59,7 @@ export default function VideoController({ videoRef }: { videoRef: RefObject<HTML
     }
 
     const onChangeVolumeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        e.stopPropagation()
         if (videoRef && videoRef.current) {
             const volume = parseInt(e.target.value)
             setVolume(volume)
@@ -127,7 +128,10 @@ export default function VideoController({ videoRef }: { videoRef: RefObject<HTML
                             )}
 
                         </div>
-                        <input type="range" onClick={e => e.stopPropagation()} min={0} max="100" value={volume} className="range range-xs" onChange={onChangeVolumeHandler} />
+                        <input type="range" onClick={e => e.stopPropagation()} min={0} max="100" value={volume} className="range range-xs" onChange={onChangeVolumeHandler} onMouseDown={(e) => e.stopPropagation()}
+                            onMouseUp={(e) => e.stopPropagation()}
+                            onTouchStart={(e) => e.stopPropagation()}
+                            onTouchEnd={(e) => e.stopPropagation()} />
                     </div>
                 </div>
 
