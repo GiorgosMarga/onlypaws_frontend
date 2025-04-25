@@ -28,15 +28,17 @@ export function VideoFeed() {
 
   const handlePrev = () => {
     if (currentIndex > 0) {
-      setCurrentIndex(prev => prev - 1)
+      setCurrentIndex(prev => Math.max(prev - 1, 0))
+      console.log(currentIndex)
+
     }
   }
 
   const handleNext = () => {
-
     if (!posts) return
     if (currentIndex < posts.length - 1) {
-      setCurrentIndex(prev => prev + 1)
+      setCurrentIndex(prev => Math.min(posts.length, prev + 1))
+      console.log(currentIndex)
     }
   }
 
@@ -45,6 +47,9 @@ export function VideoFeed() {
   }
 
   useEffect(() => {
+    let throttle = false
+
+
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "ArrowUp") {
         handlePrev()
@@ -56,11 +61,16 @@ export function VideoFeed() {
     }
 
     const scrollDown = (event: WheelEvent) => {
+      if (throttle) return
+      throttle = true
       if (event.deltaY > 0) {
         handleNext()
       } else {
         handlePrev()
       }
+      setTimeout(() => {
+        throttle = false
+      }, 300)
     }
     window.addEventListener("keydown", handleKeyDown)
     window.addEventListener("wheel", scrollDown)
@@ -99,16 +109,17 @@ export function VideoFeed() {
     <div className="flex w-full max-w-5xl mx-auto px-4 justify-center">
       {/* Engagement controls on the left */}
       <div className="flex items-center mr-4">
-        <VideoControls key={posts[currentIndex].id} video={posts[currentIndex]} onCommentsClick={handleCommentsClick} />
+        {posts[currentIndex] &&
+          <VideoControls key={posts[currentIndex].id} video={posts[currentIndex]} onCommentsClick={handleCommentsClick} />}
       </div>
 
       {/* Video container in the center */}
       <div className="relative w-auto h-[90vh] aspect-[9/16] rounded-xl overflow-hidden shadow-2xl">
-        <VideoCard video={posts[currentIndex]} />
+        {posts[currentIndex] && <VideoCard video={posts[currentIndex]} />}
       </div>
       {showComments && (
         <div className="w-full max-w-md ml-4 h-[90vh] bg-gray-800 rounded-xl overflow-hidden shadow-2xl">
-          <CommentSection videoId={posts[currentIndex].id} onClose={handleCommentsClick} />
+          {posts[currentIndex] && <CommentSection videoId={posts[currentIndex].id} onClose={handleCommentsClick} />}
         </div>
       )}
 

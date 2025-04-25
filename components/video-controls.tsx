@@ -44,8 +44,8 @@ type LikesAction = {
 
 export function VideoControls({ video, onCommentsClick }: { video: Video, onCommentsClick: () => void }) {
   const [state, dispatch] = useReducer(likesReducer, {
-    isLiked: video.isLiked,
-    likes: video.likes
+    isLiked: video?.isLiked ?? 0,
+    likes: video?.likes ?? 0
   })
   const queryClient = useQueryClient()
   const mutation = useMutation({
