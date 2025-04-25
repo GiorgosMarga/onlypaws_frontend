@@ -29,8 +29,6 @@ export function VideoFeed() {
   const handlePrev = () => {
     if (currentIndex > 0) {
       setCurrentIndex(prev => Math.max(prev - 1, 0))
-      console.log(currentIndex)
-
     }
   }
 
@@ -38,7 +36,6 @@ export function VideoFeed() {
     if (!posts) return
     if (currentIndex < posts.length - 1) {
       setCurrentIndex(prev => Math.min(posts.length, prev + 1))
-      console.log(currentIndex)
     }
   }
 

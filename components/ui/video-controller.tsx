@@ -1,8 +1,8 @@
 import { ChangeEvent, MouseEvent, RefObject, TouchEvent, useEffect, useState } from "react"
 import { Volume2, Volume, Volume1, VolumeX, Play, Pause } from "lucide-react"
+import { useSoundStore } from "@/store/sound"
 export default function VideoController({ videoRef }: { videoRef: RefObject<HTMLVideoElement | null> }) {
-    const [isMuted, setIsMuted] = useState(false)
-    const [volume, setVolume] = useState(40)
+    const { isMuted, volume, setVolume, setIsMuted } = useSoundStore()
     const [progress, setProgress] = useState(0)
     const [duration, setDuration] = useState(0)
     const [isPaused, setIsPaused] = useState(false)
@@ -54,7 +54,7 @@ export default function VideoController({ videoRef }: { videoRef: RefObject<HTML
                 setVolume(40)
             }
             videoRef.current.muted = !videoRef.current.muted
-            setIsMuted((prev) => !prev)
+            setIsMuted()
         }
     }
 
@@ -64,10 +64,10 @@ export default function VideoController({ videoRef }: { videoRef: RefObject<HTML
             const volume = parseInt(e.target.value)
             setVolume(volume)
             if (volume > 0 && isMuted) {
-                setIsMuted(false)
+                setIsMuted()
                 videoRef.current.muted = false
             } else if (volume === 0 && !isMuted) {
-                setIsMuted(true)
+                setIsMuted()
                 videoRef.current.muted = true
             }
             videoRef.current.volume = volume / 100
