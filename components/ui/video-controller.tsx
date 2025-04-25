@@ -136,7 +136,7 @@ export default function VideoController({ videoRef }: { videoRef: RefObject<HTML
             <div className="w-full absolute bottom-0 p-2  pb-0 h-[50px] cursor-pointer items-end flex justify-center">
                 <input style={{
                     '--progress': `${(progress / duration) * 100}%`,
-                } as React.CSSProperties} type="range" onClick={e => e.stopPropagation()} step={0.1} min={0} max={duration} value={progress} className="-mb-2 cursor-pointer custom-progress" onChange={onChangeProgressHandler} />
+                } as React.CSSProperties} type="range" onClick={e => e.stopPropagation()} step={0.1} min={0} max={duration ?? 1} value={progress} className="-mb-2 cursor-pointer custom-progress" onChange={onChangeProgressHandler} />
             </div>
         </div>
     )

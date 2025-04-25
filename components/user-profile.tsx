@@ -1,16 +1,17 @@
 "use client"
 
-import {  useState } from "react"
+import { useState } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Grid, Heart, Bookmark, MessageCircle, MoreHorizontal, Plus, FileVideoIcon } from "lucide-react"
 import { useQuery } from "@tanstack/react-query"
 import { useUserStore } from "@/store/user"
-import type { Post, ReqError, UserInfo } from "@/lib/types"
+import type { Post, ReqError, UserInfo, Video } from "@/lib/types"
 import { getUserData, getUserPosts } from "@/lib/api/profile"
 import { formatNumber } from "@/lib/utils"
 import ProfileAvatar from "./ui/profile-avatar"
+import { getLikedVideos } from "@/lib/api/videos"
 
 
 export function UserProfile({ id }: { id: string }) {
@@ -24,12 +25,18 @@ export function UserProfile({ id }: { id: string }) {
         queryFn: async () => await getUserPosts(id),
         queryKey: ["posts"]
     })
+
+    const { data: likedPosts } = useQuery<Video[]>({
+        queryKey: ["liked_videos"],
+        queryFn: async () => await getLikedVideos()
+    })
     const [activeTab, setActiveTab] = useState("posts")
 
+
     if (isFetchingUser || isFetchingPosts) {
-        <div className="flex items-center justify-center h-screen">
+        return (<div className="flex items-center justify-center h-screen">
             <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
-        </div>
+        </div>)
     }
 
     if (userData && "message" in userData) {
@@ -39,6 +46,8 @@ export function UserProfile({ id }: { id: string }) {
             </div>
         )
     }
+
+
     return (
         <div className="flex w-full">
             <div className="flex-1 max-w-5xl mx-auto px-4 py-6">
@@ -153,11 +162,36 @@ export function UserProfile({ id }: { id: string }) {
                     </TabsContent>
 
                     <TabsContent value="liked" className="mt-0">
-                        <div className="flex flex-col items-center justify-center py-12 text-gray-400">
-                            <Heart className="h-12 w-12 mb-4 stroke-1" />
-                            <h3 className="text-lg font-medium mb-2">No liked posts yet</h3>
-                            <p className="text-sm text-center max-w-md">Videos that you like will appear here</p>
-                        </div>
+                        {
+                            likedPosts && likedPosts.length > 0 ?
+                                <div className="grid grid-cols-2 md:grid-cols-3 gap-1 md:gap-2">
+                                    {likedPosts.map(post => <div key={post.id} className="aspect-[9/16] relative group overflow-hidden rounded-md">
+                                        <video
+                                            src={post.mediaUrl[0] || "/placeholder.svg"}
+                                            muted
+                                            className="object-cover w-full h-full"
+                                        />
+                                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-200 flex items-end p-2">
+                                            <div className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex gap-3">
+                                                <div className="flex items-center">
+                                                    <Heart className="h-3 w-3 mr-1" />
+                                                    <span className="text-xs">{formatNumber(post.likes)}</span>
+                                                </div>
+                                                <div className="flex items-center">
+                                                    <MessageCircle className="h-3 w-3 mr-1" />
+                                                    <span className="text-xs">{formatNumber(post.comments)}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    )}
+                                </div>
+                                :
+                                <div className="flex flex-col items-center justify-center py-12 text-gray-400">
+                                    <Heart className="h-12 w-12 mb-4 stroke-1" />
+                                    <h3 className="text-lg font-medium mb-2">No liked posts yet</h3>
+                                    <p className="text-sm text-center max-w-md">Videos that you like will appear here</p>
+                                </div>}
                     </TabsContent>
 
                     <TabsContent value="saved" className="mt-0">

@@ -16,6 +16,7 @@ export function VideoFeed() {
   const router = useRouter()
   const { setUser } = useUserStore()
   const [showComments, setShowComments] = useState(false)
+
   const { data: posts, isFetching } = useQuery({
     queryKey: ["videos"],
     queryFn: async () => await getVideos(),
@@ -84,17 +85,21 @@ export function VideoFeed() {
     authenticateUser()
   }, [])
 
+  useEffect(() => {
+    console.log("Posts:", posts)
+  }, [posts])
   if (isFetching || !posts) {
     return <div className="flex w-full max-w-5xl mx-auto px-4 justify-center">
       <VideoFeedSkeleton />
     </div>
   }
 
+
   return (
     <div className="flex w-full max-w-5xl mx-auto px-4 justify-center">
       {/* Engagement controls on the left */}
       <div className="flex items-center mr-4">
-        <VideoControls video={posts[currentIndex]} onCommentsClick={handleCommentsClick} />
+        <VideoControls key={posts[currentIndex].id} video={posts[currentIndex]} onCommentsClick={handleCommentsClick} />
       </div>
 
       {/* Video container in the center */}
@@ -112,7 +117,7 @@ export function VideoFeed() {
         <div className="flex flex-col gap-4 justify-center h-[90vh]">
           {/* Video progress indicators */}
           <div className="flex flex-col gap-2 py-2 items-center">
-            {posts.map((_, idx) => (
+            {posts?.map((_, idx) => (
               <div key={idx} className={`w-2 h-2 rounded-full ${idx === currentIndex ? "bg-white" : "bg-gray-500"}`} />
             ))}
           </div>
