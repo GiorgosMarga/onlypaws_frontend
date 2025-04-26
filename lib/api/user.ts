@@ -45,3 +45,15 @@ export const loginWithGoogle = async () => {
         console.error("Error logging in with Google:", err)
     }
 }
+
+export const isFollowing = async (followingId: string) => {
+    try{    
+        const res = await fetchWithAuth(`${process.env.NEXT_PUBLIC_API_URI}/follows/is-following/${followingId}`)
+        if(!res.ok){
+            return null
+        }
+        return res
+    }catch(err){
+        console.error(err)
+    }
+}

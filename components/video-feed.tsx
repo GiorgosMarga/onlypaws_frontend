@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import { VideoCard } from "@/components/video-card"
 import { VideoControls } from "@/components/video-controls"
-import { ChevronUp, ChevronDown } from "lucide-react"
+import { ChevronUp, ChevronDown, Video } from "lucide-react"
 import { useQuery } from "@tanstack/react-query"
 import { CommentSection } from "./comment-section"
 import { whoAmI } from "@/lib/api/user"
@@ -112,7 +112,7 @@ export function VideoFeed() {
 
       {/* Video container in the center */}
       <div className="relative w-auto h-[90vh] aspect-[9/16] rounded-xl overflow-hidden shadow-2xl">
-        {posts[currentIndex] && <VideoCard video={posts[currentIndex]} />}
+        {posts[currentIndex] && <VideoCard key={posts[currentIndex].id} video={posts[currentIndex]} />}
       </div>
       {showComments && (
         <div className="w-full max-w-md ml-4 h-[90vh] bg-gray-800 rounded-xl overflow-hidden shadow-2xl">

@@ -45,6 +45,7 @@ export type Video = {
     views: number
     tags: string[]
     mediaUrl: string[]
+    userId:string
     // thumbnail: string
     isLiked: boolean
     isSaved: boolean
