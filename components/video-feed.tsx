@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import { VideoCard } from "@/components/video-card"
 import { VideoControls } from "@/components/video-controls"
-import { ChevronUp, ChevronDown, Video } from "lucide-react"
+import { ChevronUp, ChevronDown } from "lucide-react"
 import { useQuery } from "@tanstack/react-query"
 import { CommentSection } from "./comment-section"
 import { whoAmI } from "@/lib/api/user"
