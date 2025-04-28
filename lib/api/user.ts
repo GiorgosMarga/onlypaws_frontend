@@ -1,3 +1,4 @@
+import { ChatUser } from "../types"
 import { fetchWithAuth } from "./fetchWithAuth"
 
 export const whoAmI = async () => {
@@ -56,4 +57,14 @@ export const isFollowing = async (followingId: string) => {
     }catch(err){
         console.error(err)
     }
+}
+
+
+export const fetchUsersByUsername = async (username: string) => {
+    const res = await fetchWithAuth(`${process.env.NEXT_PUBLIC_API_URI}/user-info?u=${username}`)
+    if(!res.ok) {
+        return null
+    }
+    const data = await res.json()
+    return data.userInfo as ChatUser[]
 }

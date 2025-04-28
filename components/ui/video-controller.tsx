@@ -6,6 +6,12 @@ export default function VideoController({ videoRef }: { videoRef: RefObject<HTML
     const [progress, setProgress] = useState(0)
     const [duration, setDuration] = useState(0)
     const [isPaused, setIsPaused] = useState(false)
+
+    useEffect(() => {
+        if (videoRef?.current) {
+            videoRef.current.muted = isMuted
+        }
+    }, [isMuted])
     useEffect(() => {
         const videoElement = videoRef.current;
         const videoIntervalTime = setInterval(() => {

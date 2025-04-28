@@ -4,16 +4,18 @@ import { Music } from "lucide-react"
 import { Video } from "@/lib/types"
 import ProfileAvatar from "./ui/profile-avatar"
 import VideoController from "./ui/video-controller"
-import { useRef } from "react"
+import { memo, useRef } from "react"
 import { useUserStore } from "@/store/user"
 import { fetchWithAuth } from "@/lib/api/fetchWithAuth"
 import toast, { Toaster } from "react-hot-toast"
 import { isFollowing as isFollowingReq } from "@/lib/api/user"
 import { useQuery } from "@tanstack/react-query"
+import { useSoundStore } from "@/store/sound"
 
 
 
-export function VideoCard({ video }: { video: Video }) {
+export const VideoCard = memo(function VideoCard({ video }: { video: Video }){
+  const { isMuted } = useSoundStore()
   const videoRef = useRef<HTMLVideoElement>(null)
   const { userId } = useUserStore()
   // const [isFollowing, setIsFollowing] = useState(true)
@@ -57,7 +59,7 @@ export function VideoCard({ video }: { video: Video }) {
           autoPlay
           loop
           playsInline
-        // muted
+          muted={isMuted}
         // controls
         />
         <VideoController key={video.id} videoRef={videoRef} />
@@ -85,5 +87,5 @@ export function VideoCard({ video }: { video: Video }) {
       </div>
     </div>
   )
-}
+})
 

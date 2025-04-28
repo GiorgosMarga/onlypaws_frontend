@@ -34,9 +34,10 @@ export function UserProfile({ id }: { id: string }) {
 
 
     if (isFetchingUser || isFetchingPosts) {
-        return (<div className="flex items-center justify-center h-screen">
-            <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
-        </div>)
+        return (
+            <div className="flex items-center justify-center h-screen w-screen">
+                <div className="animate-spin rounded-full h-32 w-32  border-b-2 border-blue-600"></div>
+            </div>)
     }
 
     if (userData && "message" in userData) {

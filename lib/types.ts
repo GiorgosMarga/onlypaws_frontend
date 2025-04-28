@@ -63,3 +63,36 @@ export type Comment = {
     mainCommentId: string | null    
     replyToUsername: string | null
 }
+
+
+export interface ChatUser {
+  name: string
+  avatarUrl: string
+  isOnline: boolean
+}
+
+export interface ChatMessage {
+  id: string
+  text: string
+  timestamp: string
+  isFromMe: boolean
+  isRead: boolean
+}
+
+export interface ChatConversation {
+  id: string
+  user: ChatUser
+  lastMessage: string
+  lastMessageTime: string
+  unreadCount: number
+  isRead: boolean
+  messages: ChatMessage[]
+}
+
+export interface ChatUser {
+  userId: string
+  name: string
+  dogName: string
+  userAvatar: string
+  dogAvatar: string
+}
