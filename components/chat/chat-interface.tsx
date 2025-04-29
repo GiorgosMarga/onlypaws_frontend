@@ -13,7 +13,7 @@ export function ChatInterface() {
 
     // Set the first conversation as active by default after loading
     useEffect(() => {
-        const ws = new WebSocket("ws://localhost:4000");
+        const ws = new WebSocket(process.env.NEXT_PUBLIC_WS_URI!);
         setSocket(ws)
         return () => {
             ws.close()
