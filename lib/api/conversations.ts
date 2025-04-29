@@ -1,4 +1,4 @@
-import { ChatConversation } from "../types"
+import { ChatConversation, ChatMessage } from "../types"
 import { fetchWithAuth } from "./fetchWithAuth"
 
 export const fetchAllConversations = async () => {
@@ -24,4 +24,20 @@ export const createConversation = async (withUser: string) => {
         return null 
     }
     return data.convId as string
+}
+
+export const fetchMessages = async (conversationId: string, page: number = 1, limit: number = 10) => {
+    try{
+        const res = await fetchWithAuth(`${process.env.NEXT_PUBLIC_API_URI}/conversations/messages/${conversationId}?page=${page}&limit=${limit}`)
+        if(!res.ok){
+            return null
+        }
+        const data = await res.json()
+
+        return data.messages as ChatMessage[]
+
+    }catch(err){
+        console.error(err)
+        return null
+    }
 }

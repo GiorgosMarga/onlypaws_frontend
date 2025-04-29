@@ -19,7 +19,7 @@ export default function SearchUser({ setCurrentConversation }: SearchUserProps) 
 
     const onClickNewConversationHandler = async (user: ChatUser) => {
 
-        const newConvId = await createConversation(user.userId)
+        const newConvId = await createConversation(user.id)
         if (!newConvId) {
             return
         }
@@ -58,7 +58,7 @@ export default function SearchUser({ setCurrentConversation }: SearchUserProps) 
                 <ul className="menu h-full w-full rounded-box bg-gray-800 shadow-sm mt-2 p-3">
                     {
                         users.map((u: ChatUser) =>
-                        (<li key={u.userId} className="text-white hover:bg-gray-900/50 cursor-pointer items-center w-full flex flex-row p-2 rounded-xl" onClick={() => {onClickNewConversationHandler(u)}}>
+                        (<li key={u.id} className="text-white hover:bg-gray-900/50 cursor-pointer items-center w-full flex flex-row p-2 rounded-xl" onClick={() => { onClickNewConversationHandler(u) }}>
                             <div className="w-10 h-10 rounded-full items-center justify-center relative overflow-hidden flex">
                                 <Image
                                     src={u.userAvatar}

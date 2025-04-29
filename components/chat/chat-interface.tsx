@@ -4,8 +4,10 @@ import { useState, useEffect } from "react"
 import { Conversation } from "@/components/chat/conversation"
 import Conversations from "./conversations"
 import { ChatConversation } from "@/lib/types"
+import { useUserStore } from "@/store/user"
 
 export function ChatInterface() {
+    const { userId } = useUserStore()
     const [socket, setSocket] = useState<WebSocket | null>(null)
     const [activeConversation, setActiveConversation] = useState<ChatConversation | null>(null)
 
@@ -15,9 +17,29 @@ export function ChatInterface() {
         setSocket(ws)
         return () => {
             ws.close()
+            setSocket(null)
         }
     }, [])
 
+    useEffect(() => {
+        if (!socket) return
+
+        const handleOpen = () => {
+            console.log("WebSocket connected")
+            socket.send(JSON.stringify({
+                type: "join",
+                from: userId
+            }))
+        }
+
+        // Attach handler
+        socket.addEventListener("open", handleOpen)
+
+        return () => {
+            // Clean up handler
+            socket.removeEventListener("open", handleOpen)
+        }
+    }, [socket, userId])
     // Handle conversation selection
     const handleSelectConversation = (conv: ChatConversation) => {
         setActiveConversation(conv)

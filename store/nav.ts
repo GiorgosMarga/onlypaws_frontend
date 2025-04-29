@@ -1,7 +1,7 @@
 import {create} from "zustand"
 import {persist} from "zustand/middleware"
 
-export type Pages = "home" | "profile" | "discover" | "create" | "inbox"
+export type Pages = "home" | "profile" | "discover" | "create" | "chat"
 
 type NavStore = {
     currentPage:Pages,

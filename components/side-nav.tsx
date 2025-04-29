@@ -40,10 +40,10 @@ export function SideNav() {
       />
       <NavItem
         icon={<MessageSquare className="w-6 h-6" />}
-        label="Inbox"
-        active={currentPage === "inbox"}
-        onClick={() => handleNavClick("inbox")}
-        href="/inbox"
+        label="Chat"
+        active={currentPage === "chat"}
+        onClick={() => handleNavClick("chat")}
+        href="/chat"
       />
       <NavItem
         icon={<User className="w-6 h-6" />}

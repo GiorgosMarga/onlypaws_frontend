@@ -65,18 +65,20 @@ export type Comment = {
 }
 
 
-export interface ChatUser {
-  name: string
-  avatarUrl: string
-  isOnline: boolean
-}
+// export interface ChatUser {
+//   name: string
+//   avatarUrl: string
+//   isOnline: boolean
+// }
 
 export interface ChatMessage {
-  id: string
-  text: string
-  timestamp: string
-  isFromMe: boolean
-  isRead: boolean
+  id?: string
+  content: string
+  from: string
+  to: string
+  conversationId?: string,
+  createdAt: string
+  reatAt?: string
 }
 
 export interface ChatConversation {
@@ -90,9 +92,10 @@ export interface ChatConversation {
 }
 
 export interface ChatUser {
-  userId: string
+  id: string
   name: string
   dogName: string
   userAvatar: string
   dogAvatar: string
+  isOnline: boolean
 }
