@@ -1,3 +1,4 @@
+import { StatusCodes } from "http-status-codes"
 import { ChatUser } from "../types"
 import { fetchWithAuth } from "./fetchWithAuth"
 
@@ -10,9 +11,19 @@ export const whoAmI = async () => {
         credentials: "include",
     })
     const data = await res.json()
-    if (!res.ok) {
+    if(res.status === StatusCodes.FORBIDDEN) {
+        const redirectTo = data.redirect_url
+        console.log({redirectTo})
+        if(!redirectTo){
+            return null
+        }
+        window.location.href = redirectTo
+        return null
+    }else if (!res.ok){
+        console.log(data.message)
         return null
     }
+    
     return data.userId
 }
 

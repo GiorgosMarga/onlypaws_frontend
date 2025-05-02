@@ -13,15 +13,16 @@ import ProfileAvatar from "../ui/profile-avatar"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { fetchMessages } from "@/lib/api/conversations"
 import { format } from "date-fns"
+import { useSocketStore } from "@/store/socket"
 
 interface ConversationProps {
     conversation: ChatConversation
     onBack?: () => void
-    socket: WebSocket | null
 }
 
-export function Conversation({ conversation, socket }: ConversationProps) {
+export function Conversation({ conversation }: ConversationProps) {
     const { userId } = useUserStore()
+    const { socket } = useSocketStore()
     const [newMessage, setNewMessage] = useState("")
     const [isSending, setIsSending] = useState(false)
     const messagesEndRef = useRef<HTMLDivElement>(null)

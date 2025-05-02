@@ -20,7 +20,9 @@ import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import ImageUploader from "./ui/image-upload"
 import { StatusCodes } from "http-status-codes"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
+import { fetchWithAuth } from "@/lib/api/fetchWithAuth"
+import { useUserStore } from "@/store/user"
 
 // Dog breeds for the dropdown
 const DOG_BREEDS = [
@@ -49,6 +51,8 @@ const DOG_BREEDS = [
 const today = new Date()
 const maxDate = today.toISOString().split("T")[0]
 export function ProfileSetupForm() {
+    const { userId } = useUserStore()
+    const searchParams = useSearchParams()
     const router = useRouter()
     const [formData, setFormData] = useState({
         name: "",
@@ -156,11 +160,12 @@ export function ProfileSetupForm() {
             uploadFormData.append("userPic", userAvatarFile!)
             uploadFormData.append("dogPic", dogAvatarFile!)
             uploadFormData.append("userInfo", JSON.stringify(formData));
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URI}/user-info`, {
-                method: "POST",
+            const insert = searchParams.get("insert")
+            console.log(`${process.env.NEXT_PUBLIC_API_URI}/user-info${insert ? "?insert=true" : ""}`)
+            const res = await fetchWithAuth(`${process.env.NEXT_PUBLIC_API_URI}/user-info${!insert ? `/${userId}` : ""}`, {
+                method: insert ? "POST" : "PATCH",
                 body: uploadFormData,
-                credentials: "include"
-            })
+            }, true, false)
             const data = await res.json()
             if (!res.ok) {
                 if (res.status === StatusCodes.UNPROCESSABLE_ENTITY) {
