@@ -19,7 +19,8 @@ export default function Conversations({ activeConversation, handleSelectConversa
             }
             return convos
         },
-
+        refetchOnMount: false,
+        refetchOnWindowFocus: false,
     })
     if (isFetching) {
         return (<div className="w-full h-full flex flex-col md:w-80 border-r border-gray-800 items-center justify-center text-center">
@@ -32,16 +33,16 @@ export default function Conversations({ activeConversation, handleSelectConversa
     return (
         <div className="relative w-full h-full flex flex-col md:w-80 border-r border-gray-800 items-center" >
             {/* <SearchUser setCurrentConversation={handleSelectConversation} /> */}
-        
-                <div className="w-full md:w-80 border-r border-gray-800 flex-shrink-0">
-                    <ConversationList
-                        conversations={conversations ?? null}
-                        activeConversationId={activeConversation?.id ?? null}
-                        onSelectConversation={handleSelectConversation}
-                    />
-                </div>
 
-            
+            <div className="w-full md:w-80 border-r border-gray-800 flex-shrink-0">
+                <ConversationList
+                    conversations={conversations ?? null}
+                    activeConversationId={activeConversation?.id ?? null}
+                    onSelectConversation={handleSelectConversation}
+                />
+            </div>
+
+
         </div >
     )
 

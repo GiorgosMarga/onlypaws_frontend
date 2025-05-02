@@ -110,6 +110,7 @@ export function Conversation({ conversation, socket }: ConversationProps) {
                     // setMessages((prev) => [...prev, data.message])
                     mutation.mutate(data.message)
                 } else if (data.type === "typing") {
+                    console.log("typing: ", data.message)
                     setIsOtherUserTyping(data.isTyping)
                 }
             }

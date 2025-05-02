@@ -7,19 +7,21 @@ import { ChevronUp, ChevronDown } from "lucide-react"
 import { useQuery } from "@tanstack/react-query"
 import { CommentSection } from "./comment-section"
 import { whoAmI } from "@/lib/api/user"
-import { useRouter } from "next/navigation"
 import { useUserStore } from "@/store/user"
 import { getVideos } from "@/lib/api/videos"
 import { VideoFeedSkeleton } from "./video-feed-skeleton"
 
 export function VideoFeed() {
-  const router = useRouter()
   const { setUser } = useUserStore()
   const [showComments, setShowComments] = useState(false)
 
   const { data: posts, isFetching } = useQuery({
     queryKey: ["videos"],
-    queryFn: async () => await getVideos(),
+
+    queryFn: async () => {
+      return await getVideos()
+    }
+    ,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
   })
@@ -82,10 +84,7 @@ export function VideoFeed() {
   useEffect(() => {
     const authenticateUser = async () => {
       const userId = await whoAmI()
-      if (!userId) {
-        router.push("/login")
-        return
-      } else {
+      if (userId) {
         setUser(userId)
       }
     }
