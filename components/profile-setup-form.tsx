@@ -51,8 +51,6 @@ const DOG_BREEDS = [
 const today = new Date()
 const maxDate = today.toISOString().split("T")[0]
 export function ProfileSetupForm() {
-    const { userId } = useUserStore()
-    const searchParams = useSearchParams()
     const router = useRouter()
     const [formData, setFormData] = useState({
         name: "",
