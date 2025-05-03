@@ -20,10 +20,8 @@ import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import ImageUploader from "./ui/image-upload"
 import { StatusCodes } from "http-status-codes"
-import { useRouter, useSearchParams } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { fetchWithAuth } from "@/lib/api/fetchWithAuth"
-import { useUserStore } from "@/store/user"
-
 // Dog breeds for the dropdown
 const DOG_BREEDS = [
     "Labrador Retriever",
