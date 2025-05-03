@@ -160,10 +160,8 @@ export function ProfileSetupForm() {
             uploadFormData.append("userPic", userAvatarFile!)
             uploadFormData.append("dogPic", dogAvatarFile!)
             uploadFormData.append("userInfo", JSON.stringify(formData));
-            const insert = searchParams.get("insert")
-            console.log(`${process.env.NEXT_PUBLIC_API_URI}/user-info${insert ? "?insert=true" : ""}`)
-            const res = await fetchWithAuth(`${process.env.NEXT_PUBLIC_API_URI}/user-info${!insert ? `/${userId}` : ""}`, {
-                method: insert ? "POST" : "PATCH",
+            const res = await fetchWithAuth(`${process.env.NEXT_PUBLIC_API_URI}/user-info`, {
+                method: "PATCH",
                 body: uploadFormData,
             }, true, false)
             const data = await res.json()
